@@ -32,9 +32,17 @@ router.post('/send-notification', (req, res) => {
   const payload = JSON.stringify({ title, message });
 
   webpush.sendNotification(subscription, payload)
-    .then(result => console.log('Notificación enviada', result))
-    .catch(err => console.error(err));
+  .then(result => {
+    console.log('Notificación enviada', result);
+    res.json({ success: true, message: 'Notificación enviada.' });
+  })
+  .catch(err => {
+    console.error(err);
+    res.json({ success: false, message: 'Error al enviar la notificación.' });
+  });
+  //   .then(result => console.log('Notificación enviada', result))
+  //   .catch(err => console.error(err));
 
-  res.json({ success: true, message: 'Notificación enviada.' });
+  // res.json({ success: true, message: 'Notificación enviada.' });
 });
 module.exports = router;
